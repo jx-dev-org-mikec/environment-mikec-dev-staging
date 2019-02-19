@@ -1,0 +1,154 @@
+Step: build-step-credential-initializer:
+
+{"level":"warn","ts":1550610829.425411,"logger":"fallback-logger","caller":"logging/config.go:65","msg":"Fetch GitHub commit ID from kodata failed: \"ref: refs/heads/test\" is not a valid GitHub commit ID"}
+{"level":"info","ts":1550610829.4261742,"logger":"fallback-logger","caller":"creds-init/main.go:40","msg":"Credentials initialized."}
+Step: build-step-git-source-0:
+
+{"level":"warn","ts":1550610831.8904061,"logger":"fallback-logger","caller":"logging/config.go:65","msg":"Fetch GitHub commit ID from kodata failed: \"ref: refs/heads/test\" is not a valid GitHub commit ID"}
+{"level":"info","ts":1550610832.1022844,"logger":"fallback-logger","caller":"git-init/main.go:92","msg":"Successfully cloned \"https://github.com/jx-dev-org-mikec/bdd-gh-1550610389.git\" @ \"master\" in path \"/workspace\""}
+Step: build-step-jenkins:
+
+Picked up _JAVA_OPTIONS: -Xmx400m
+Started
+Running in Durability level: PERFORMANCE_OPTIMIZED
+  18.633 [id=26]	WARNING	i.f.k.c.i.VersionUsageUtils#alert: The client is using resource type 'customresourcedefinitions' with unstable version 'v1beta1'
+[Pipeline] node
+Running on Jenkins in /tmp/jenkinsTests.tmp/jenkins7124556610298193021test/workspace/job
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Declarative: Checkout SCM)
+[Pipeline] checkout
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] withCredentials
+[Pipeline] {
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (CI Build and push snapshot)
+Stage "CI Build and push snapshot" skipped due to when conditional
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Build Release)
+[Pipeline] dir
+Running in /home/jenkins/go/src/github.com/jx-dev-org-mikec/bdd-gh-1550610389
+[Pipeline] {
+[Pipeline] git
+Cloning the remote Git repository
+Cloning repository https://github.com/jx-dev-org-mikec/bdd-gh-1550610389.git
+ > git init /home/jenkins/go/src/github.com/jx-dev-org-mikec/bdd-gh-1550610389 # timeout=10
+Fetching upstream changes from https://github.com/jx-dev-org-mikec/bdd-gh-1550610389.git
+ > git --version # timeout=10
+ > git fetch --tags --progress https://github.com/jx-dev-org-mikec/bdd-gh-1550610389.git +refs/heads/*:refs/remotes/origin/*
+ > git config remote.origin.url https://github.com/jx-dev-org-mikec/bdd-gh-1550610389.git # timeout=10
+ > git config --add remote.origin.fetch +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git config remote.origin.url https://github.com/jx-dev-org-mikec/bdd-gh-1550610389.git # timeout=10
+Fetching upstream changes from https://github.com/jx-dev-org-mikec/bdd-gh-1550610389.git
+ > git fetch --tags --progress https://github.com/jx-dev-org-mikec/bdd-gh-1550610389.git +refs/heads/*:refs/remotes/origin/*
+ > git rev-parse refs/remotes/origin/master^{commit} # timeout=10
+ > git rev-parse refs/remotes/origin/origin/master^{commit} # timeout=10
+Checking out Revision 513c9151e47a730acfa38a21fd9a4301d5a8b338 (refs/remotes/origin/master)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 513c9151e47a730acfa38a21fd9a4301d5a8b338
+ > git branch -a -v --no-abbrev # timeout=10
+ > git checkout -b master 513c9151e47a730acfa38a21fd9a4301d5a8b338
+Commit message: "Draft create"
+First time build. Skipping changelog.
+[Pipeline] sh
++ jx-release-version
++ echo 0.0.1
+[Pipeline] sh
++ cat VERSION
++ jx step tag --version 0.0.1
+Tag v0.0.1 created and pushed to remote origin
+[Pipeline] sh
++ make build
+CGO_ENABLED=0 GO15VENDOREXPERIMENT=1 go build -ldflags '' -o bin/bdd-gh-1550610389 main.go
+[Pipeline] sh
++ cat VERSION
++ export VERSION=0.0.1
++ skaffold build -f skaffold.yaml
+time="2019-02-19T21:16:30Z" level=warning msg="config version (skaffold/v1beta2) out of date: upgrading to latest (skaffold/v1beta3)"
+Starting build...
+Building [changeme]...
+Sending build context to Docker daemon  525.8kBSending build context to Docker daemon  6.502MB
+Step 1/4 : FROM scratch
+ ---> 
+Step 2/4 : EXPOSE 8080
+ ---> Running in c80e9b1b70e1
+ ---> 1876ab62b10e
+Step 3/4 : ENTRYPOINT /bdd-gh-1550610389
+ ---> Running in e4e38eaf601e
+ ---> 9aa1f770c476
+Step 4/4 : COPY ./bin/ /
+ ---> 7fb113fbdfd8
+Successfully built 7fb113fbdfd8
+The push refers to a repository [10.67.241.128:5000/jx-dev-org-mikec/bdd-gh-1550610389]
+47bda455be27: Preparing
+47bda455be27: Pushed
+0.0.1: digest: sha256:e1ac05e89104373334c71588a1f5ca894336f9936e048beb0409d6b01bbd20b9 size: 528
+Build complete in 1.621269787s
+Starting test...
+Test complete in 4.55µs
+changeme -> 10.67.241.128:5000/jx-dev-org-mikec/bdd-gh-1550610389:0.0.1
+There is a new version (0.23.0) of skaffold available. Download it at https://storage.googleapis.com/skaffold/releases/latest/skaffold-linux-amd64
+
+[Pipeline] sh
++ cat VERSION
++ jx step post build --image 10.67.241.128:5000/jx-dev-org-mikec/bdd-gh-1550610389:0.0.1
+[Pipeline] }
+[Pipeline] // dir
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Promote to Environments)
+[Pipeline] dir
+Running in /home/jenkins/go/src/github.com/jx-dev-org-mikec/bdd-gh-1550610389/charts/bdd-gh-1550610389
+[Pipeline] {
+[Pipeline] sh
++ cat ../../VERSION
++ jx step changelog --version v0.0.1
+Using batch mode as inside a pipeline
+Generating change log from git ref 513c9151e47a730acfa38a21fd9a4301d5a8b338 => 6b30d1c1f18f160799c91b72da47f56ec939a2f6
+Failed to enrich commits with issues: User.jenkins.io "" is invalid: metadata.name: Required value: name or generateName is required
+Failed to enrich commits with issues: User.jenkins.io "" is invalid: metadata.name: Required value: name or generateName is required
+Finding issues in commit messages using git format
+No release found for jx-dev-org-mikec/bdd-gh-1550610389 and tag v0.0.1 so creating a new release
+Updated the release information at https://github.com/jx-dev-org-mikec/bdd-gh-1550610389/releases/tag/v0.0.1
+generated: /home/jenkins/go/src/github.com/jx-dev-org-mikec/bdd-gh-1550610389/charts/bdd-gh-1550610389/templates/release.yaml
+Created Release bdd-gh-1550610389-0-0-1 resource in namespace jx
+Updating PipelineActivity jx-dev-org-mikec-bdd-gh-1550610389-master-1 with version 0.0.1
+Updated PipelineActivities jx-dev-org-mikec-bdd-gh-1550610389-master-1 with release notes URL: https://github.com/jx-dev-org-mikec/bdd-gh-1550610389/releases/tag/v0.0.1
+[Pipeline] sh
++ jx step helm release
+No $CHART_REPOSITORY defined so using the default value of: http://jenkins-x-chartmuseum:8080
+Adding missing Helm repo: jenkins-x http://chartmuseum.jenkins-x.io
+Successfully added Helm repository jenkins-x.
+Adding missing Helm repo: releases http://jenkins-x-chartmuseum:8080
+Successfully added Helm repository releases.
+No $CHART_REPOSITORY defined so using the default value of: http://jenkins-x-chartmuseum:8080
+Uploading chart file bdd-gh-1550610389-0.0.1.tgz to http://jenkins-x-chartmuseum:8080/api/charts
+Received 201 response: {"saved":true}
+[Pipeline] sh
++ cat ../../VERSION
++ jx promote -b --all-auto --timeout 1h --version 0.0.1
+prow based install so skip waiting for the merge of Pull Requests to go green as currently there is an issue with gettingstatuses from the PR, see https://github.com/jenkins-x/jx/issues/2410
+Promoting app bdd-gh-1550610389 version 0.0.1 to namespace jx-staging
+Created Pull Request: https://github.com/jx-dev-org-mikec/environment-mikec-dev-staging/pull/2
+
+Pull Request https://github.com/jx-dev-org-mikec/environment-mikec-dev-staging/pull/2 is merged at sha 77825980e51056a4b9dc8e170520ea7540121dcf
+Pull Request merged but we are not waiting for the update pipeline to complete!
+Could not find the service URL in namespace jx-staging for names bdd-gh-1550610389, jx-bdd-gh-1550610389, jx-staging-bdd-gh-1550610389
+[Pipeline] }
+[Pipeline] // dir
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // withCredentials
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+Finished: SUCCESS
